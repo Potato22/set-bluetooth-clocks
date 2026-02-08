@@ -59,5 +59,15 @@ options:
 ### Run as daemon
 Move the sbc-sync-routine.service to `/etc/systemd/system`
 ```zsh
-sudo mv ./lywsd02-sync-routine.service /etc/systemd/system 
+sudo mv ./sbc-sync-routine.service /etc/systemd/system 
+```
+```
+sudo systemctl enable sbc-sync-routine.service --now
+```
+check if it's running
+```
+sudo systemctl status sbc-sync-routine
+
+# or if you want live feed
+journalctl -u sbc-sync-routine.service -f 
 ```
