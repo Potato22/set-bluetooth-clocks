@@ -58,14 +58,14 @@ options:
 
 ### Run as daemon
 Move the sbc-sync-routine.service to `/etc/systemd/system`
-```zsh
+```sh
 sudo mv ./sbc-sync-routine.service /etc/systemd/system 
 ```
-```
+```sh
 sudo systemctl enable sbc-sync-routine.service --now
 ```
 check if it's running
-```
+```sh
 sudo systemctl status sbc-sync-routine
 
 # or if you want live feed
