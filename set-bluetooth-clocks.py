@@ -5,7 +5,7 @@ import asyncio
 import bluetooth_clocks
 import bluetooth_clocks.scanners
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import logging
 import colorlog
@@ -27,7 +27,7 @@ logger.setLevel(logging.DEBUG)
 
 IGNORE_NAMES=[
         "ATC_",
-        "LYWSD02"
+        #"LYWSD02"
         ]
 
 async def discover_clocks(args, clocks):
@@ -56,10 +56,9 @@ async def update_time(args, clock):
     for attempt in range(1, attempts_gettime + 1):
         try:
             timestamp = await clock.get_time()
-            time = datetime.fromtimestamp(timestamp)
-            time = datetime.utcfromtimestamp(timestamp)
+            time = datetime.fromtimestamp(timestamp, tz=timezone.utc)
             logger.info("Current time: {0}".format(time))
-            now = datetime.now()
+            now = datetime.now(tz=timezone.utc)  # Make this timezone-aware too
             diff = (now - time).total_seconds()
             diff = abs(diff)
             if (diff <= diff_max):

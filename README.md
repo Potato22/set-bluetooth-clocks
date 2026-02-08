@@ -1,4 +1,7 @@
 # set-bluetooth-clocks
+> *removed docker methods, since I intend to use this fork to be shoved inside an rpi.*  
+> *Also now inside a venv, because rpi os INSISTS on making one for installing a few fucking module*
+
 Python based utility to discover and update times of bluetooth clocks - uses python package [bluetooth-clocks](https://github.com/koenvervloesem/bluetooth-clocks.git).
 
 I have a bunch of LYWSD03MMC sensors and Xiaomi LYWSD02 clocks which also act as temperature sensors for my Home Assistant setup.
@@ -53,30 +56,8 @@ options:
                         Number of times attempts should be made to set time on the clock. (default: 15)
 ```
 
-
-## Docker-compose file
-The environment variables in the docker-compose file follow the command-line parameters. See help on command-line parameters.
-
-```
-services:
-  set-bluetooth-clocks:
-      build:
-          dockerfile : Dockerfile
-          context: .
-      container_name: set-bluetooth-clocks
-      restart: unless-stopped
-      volumes:
-          - /etc/localtime:/etc/localtime:ro
-          - /etc/timezone:/etc/timezone:ro
-          - /tmp/docker/set-bluetooth-clocks/tmp:/tmp
-          - /run/dbus:/run/dbus:ro
-          - /var/lib/bluetooth:/var/lib/bluetooth:ro
-      environment:
-        #- LOOP_INTERVAL=7200
-        - SCAN_DURATION=60
-        #- DIFF_TOLERANCE=30
-        #- ATTEMPTS_GETTIME=10
-        #- ATTEMPTS_SETTIME=15
-      security_opt:
-          - seccomp:unconfined
+### Run as daemon
+Move the sbc-sync-routine.service to `/etc/systemd/system`
+```zsh
+sudo mv ./lywsd02-sync-routine.service /etc/systemd/system 
 ```

@@ -1,0 +1,15 @@
+[Unit]
+Description=lywsd02 Sync Routine
+
+[Service]
+Type=simple
+WorkingDirectory=/home/potto-pi3bhole/scripts/lywsd02/
+ExecStart=/home/potto-pi3bhole/scripts/lywsd02/LYWSD02/bin/python /home/potto-pi3bhole/scripts/lywsd02/set-bluetooth-clocks.py
+Restart=on-failure
+RestartSec=10
+User=potto-pi3bhole
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
